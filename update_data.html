@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customize Your Box</title>
+  <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/customize.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="subscription-listing.html">Subscription Listings</a>
+    <a href="tracking.html">Order Tracking</a>
+    <a href="order.html">Order Box</a>
+    <a href="customize.html">Customize Box</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <header>
+    <h1>Update Your Subscription Box</h1>
+    <p>Choose your preferences to make your box unique.</p>
+    <form onsubmit="updateOrder()">
+      <label for="boxType">Enter order id first and then the updated values:</label>
+      <input id="order_ID" type="text" placeholder="The Order ID">
+      <input id="order_type" type="text" placeholder="Book/Snacks/WellnessProduct">
+      <input id="genre" type="text" placeholder="Book Genre">
+      <input id="Quantity" type="text" placeholder="Quantity">
+      <button type="submit">Update Order</button>
+    </form>
+  </header>
+
+  <footer>
+    <p>&copy; 2024 Subscription Box Service</p>
+  </footer>
+  <script>
+    function updateOrder() {
+      // event.preventDefault;
+      const order_ID = document.getElementById('order_ID').value;
+      const order_type = document.getElementById('order_type').value;
+      const genre = document.getElementById('genre').value;
+      const Quantity = document.getElementById('Quantity').value;
+
+      const orderData = {
+        order_ID: order_ID,
+        order_type: order_type,
+        genre: genre,
+        Quantity: Quantity
+      };
+
+
+      fetch("http://127.0.0.1:3601/order/updateOrder", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(orderData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        
+        alert(data.message);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Failed to place order!");
+      });
+    }
+  </script>
+</body>
+</html>

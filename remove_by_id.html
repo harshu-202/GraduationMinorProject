@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customize Your Box</title>
+  <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/customize.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="subscription-listing.html">Subscription Listings</a>
+    <a href="tracking.html">Order Tracking</a>
+    <a href="order.html">Order Box</a>
+    <a href="customize.html">Customize Box</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <header>
+    <h1>Remove Your Subscription Box Service</h1>
+    <form onsubmit="removeOrder()">
+      <label for="boxType">Enter the Order ID you received whose service you intend to stop:</label>
+      <input id="order_ID" type="number" placeholder="Enter the Order ID ">
+      <button type="submit">Remove Order</button>
+    </form>
+  </header>
+
+  <footer>
+    <p>&copy; 2024 Subscription Box Service</p>
+  </footer>
+  <script>
+    function removeOrder() {
+      // event.preventDefault;
+      const order_ID = document.getElementById('order_ID').value;
+      const orderData = {
+        order_ID: order_ID,
+        };
+
+      fetch("http://127.0.0.1:3601/order/removeorder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(orderData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        
+        alert(data.message);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Failed to place order!");
+      });
+    }
+  </script>
+</body>
+</html>
